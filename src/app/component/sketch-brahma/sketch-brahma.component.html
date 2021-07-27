@@ -1,0 +1,52 @@
+<p>sketch-brahma works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <select class="form-control form-select" name="state" id="state" (change)="selectAccount($event)">
+                <option value="" disabled selected>Select your State.!</option>
+                <option *ngFor="let item of stateList" [value]="item.state">{{item.state}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" type="text" name="search" id="search" placeholder="Serach" [(ngModel)]="serach"
+                (keyup)="serchByname($event)">
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn-primary" (click)="clearFilter()">Clear Filter</button>
+        </div>
+    </div>
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Brewery_type</th>
+                <th scope="col">Country</th>
+                <th scope="col">State</th>
+                <th scope="col">City</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="sketchData.length>0">
+            <tr *ngFor="let item of sketchData">
+                <td>{{item.name}}</td>
+                <td>{{item.brewery_type}}</td>
+                <td>{{item.country}}</td>
+                <td>{{item.state}}</td>
+                <td>{{item.city}}</td>
+            </tr>
+        </ng-container>
+          
+            <div *ngIf="sketchData.length==0">
+                <strong>
+                    Uh oh!
+                </strong>
+                <div>
+                    <strong>We couldn't find any content with these filters. Please try a broader search.</strong>
+                </div>
+            </div>
+
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="title">Weightage </div>
+    <form class="frm" [formGroup]="weitageCalculator">
+        <div>
+            <label for="rating">Rating</label>
+            <select formControlName="rating">
+                <option *ngFor="let ratingobj of ratingBrand" [value]="ratingobj.value">{{ ratingobj.name }}</option>
+            </select>
+        </div>
+        <div>
+            <label for="contact">Contact</label>
+            <select formControlName="contact">
+                <option *ngFor="let conobj of numberOfContact" [value]="conobj.value">{{ conobj.name }}</option>
+            </select>
+        </div>
+        <div>
+            <label for="photo">Photo</label>
+            <select formControlName="photo">
+                <option *ngFor="let photoobj of photoclarity" [value]="photoobj.value">{{ photoobj.name }}</option>
+            </select>
+        </div>
+        <div>
+            <label for="Submission">Submission</label>
+            <select formControlName="submission">
+                <option *ngFor="let subobj of noofSubmissions" [value]="subobj.value">{{ subobj.name }}</option>
+            </select>
+        </div>
+        <div>
+            <label for="Company">Company</label>
+            <select formControlName="company">
+                <option *ngFor="let comobj of company" [value]="comobj.value">{{ comobj.name }}</option>
+            </select>
+        </div>
+        <div>
+            <button (click)="calculator()">Submit</button>
+        </div>
+        <div>
+            Weightage Value:{{weightageSeperatevalue}}
+        </div>
+
+    </form>
+</div>
+<div class="conainer">
+<div class="title">
+    Task 2
+</div>
+<div>
+    <label for="cname">Customer Name</label>
+    <input type="text" name="name" id="name" [(ngModel)]="name">
+    <label for="rating">Rating</label>
+    <input type="text" name="rating" id="rating" [(ngModel)]="rating" (ngModelChange)="customerrating()">
+    <!-- <button type="submit" (click)="ratingcal()"  >Give Rating</button> -->
+    <!-- (ngModelChange)="customerrating()" -->
+</div>
+<div>
+    <ul *ngFor="let serv of serverdata">
+        <li>
+            {{name}}
+        </li>
+    </ul>
+    <!-- <table >
+        <tr>
+          <th style="padding: 5px;" *ngFor="let serv of server ;index as i">{{serv.name}}</th>
+        </tr>
+        <tr>
+          <td *ngFor="let serv of serverdata">
+            {{name}}{{rating}}
+        </td>
+
+        </tr>
+       
+      </table> -->
+</div>
+</div>
+
+<div class="container chrt_cont">
+<div class="title">
+    Task 3
+</div>
+<div>
+    <div>
+        <label for="select">Select a week</label>
+        <select name="chart3" id="chart1" [(ngModel)]="date" (change)="initAxis(date);drawBars(date);initSvg();drawAxis()">
+            <option *ngFor="let day of days" [ngValue]="day">{{day.company}}</option>
+        </select>
+    </div>
+    <h2 >Collection Report with bar chart</h2>
+    <div id="barChart"></div>
+</div>
+</div>

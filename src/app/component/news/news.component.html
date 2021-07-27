@@ -1,0 +1,210 @@
+<div class="row">
+    <div class="col-md-3 profile  desk_profile">
+        <div class="container">
+            <div class="row newsreader">
+                <div class="col-md-3">
+                    <img src="assets/news.png" alt="Avatar" class="avatar">
+                </div>
+                <div class="col-md-9">
+                    <h6>Hi Reader,</h6>
+                    <p>Here's your News!</p>
+                </div>
+            </div>
+            <div class="view_toggle">
+                <h5 justify-content-center>View Toggle</h5>
+                <div>
+                    <button class="" [ngClass]="{'viewtoggle_btn' : cardBln, 'btncss': !cardBln}" type="submit" (click)="cardheader()"> <i
+                            class="bi bi-card-heading"></i>
+                    </button>
+                    <button class=""  [ngClass]="{'viewtoggle_btn' : !cardBln, 'btncss': cardBln}" type="submit" (click)="cardData()"> <i class="bi bi-card-list"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="feed_back">
+                <h5>Have a Feedback?</h5>
+                <button class="button" data-bs-toggle="modal" data-bs-target="#exampleModal">we're Listening!</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 list">
+        <div class="container" *ngIf="cardBln==true">
+            <div class="row">
+                <div class="col-md-4 card"
+                    *ngFor="let item of cardlistdata | paginate: { itemsPerPage: 6, currentPage: p }">
+                    <div class="card-body" data-bs-toggle="modal" data-bs-target="#cardmodal">
+                        <span class="close"> <i class="bi bi-x"></i>
+                        </span>
+                        <h6 class="card-title">{{item.title}}</h6>
+                        <span class="card-text news_detail">{{item.summary}}</span>
+                        <span class="publish">{{item.published}}</span>
+                        <img width="100%" src="assets/news_image.jpg" alt="banner">
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="cardmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <iframe src="https://www.first.org/newsroom/releases/20210611" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+        <div class="container" *ngIf="cardBln==false">
+            <div class="row list_row" *ngFor="let item of cardDatas | paginate: { itemsPerPage: 6, currentPage: p }" data-bs-toggle="modal" data-bs-target="#cardmodal">
+                <div class="col-md-2">
+                    <img width="100%" src="assets/news.png" alt="banner" class="avatar">
+                </div>
+                <div class="col-md-9">
+                    <h6 class="card_list_title">{{item.title}}</h6>
+                    <span class="card_list_summary news_detail">{{item.summary}}</span>
+                    <span class="publish">{{item.published}}</span>
+
+                </div>
+                <div class="col-md-1">
+                    <span class="close_list"> <i class="bi bi-x"></i>
+                    </span>
+                </div>
+                     <!-- Modal -->
+                     <div class="modal fade" id="cardmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                     <div class="modal-dialog">
+                         <div class="modal-content">
+                             <iframe src="https://www.first.org/newsroom/releases/20210611" frameborder="0"></iframe>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+
+
+            <div class="text-center">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-md-5 profile">
+                    <div class="container">
+                        <div class="row newsreader">
+                            <div class="col-md-3">
+                                <img src="assets/news.png" alt="Avatar" class="avatar">
+                            </div>
+                            <div class="col-md-9">
+                                <h6>Hi Reader,</h6>
+                                <p>Here's your News!</p>
+                            </div>
+                        </div>
+                        <div class="feed_back">
+                            <h5>Have a Feedback?</h5>
+                            <button class="btn_css" data-bs-toggle="modal" data-bs-target="#exampleModal">we're
+                                Listening!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 list">
+                    <div class="row">
+                        <h6>Thank you so much for taking the time!</h6>
+                        <span class="news_detail">Please provide the below details!</span>
+                        <form [formGroup]="feedbackForm" (ngSubmit)="signup();">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">First name:</label>
+                                <input type="text" formControlName="firstName" class="form-control" id="first-name"
+                                    placeholder="Andi" [ngClass]="{ 'is-invalid': submitted && fval.firstName.errors }">
+                                <div *ngIf="submitted && fval.firstName.errors" class="invalid-feedback">
+                                    <div *ngIf="fval.firstName.errors.required">
+                                        First Name is required and must be a valid name
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name" class="col-form-label">Last name:</label>
+                                <input type="text" formControlName="lastName" class="form-control" id="last-name"
+                                    placeholder="Selvaraj"
+                                    [ngClass]="{ 'is-invalid': submitted && fval.lastName.errors }">
+
+                                <div *ngIf="submitted && fval.lastName.errors" class="invalid-feedback">
+                                    <div *ngIf="fval.lastName.errors.required">
+                                        last Name is required and must be a valid name
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Address:</label>
+                                <textarea class="form-control" formControlName="address" id="address"
+                                    placeholder="Enter your full postal address"
+                                    [ngClass]="{ 'is-invalid': submitted && fval.address.errors }"></textarea>
+
+                                <div *ngIf="submitted && fval.address.errors" class="invalid-feedback">
+                                    <div *ngIf="fval.address.errors.required">Please provide your address!
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text"  class="col-form-label">Country:</label>
+                                <select class="form-control form-select" formControlName="country"  name="country" id="country"  [ngClass]="{ 'is-invalid': submitted && fval.email.errors }">
+                                    <option value="" disabled selected>Select your Country.!</option>
+                                    <option *ngFor="let country of countries" [value]="country.name">{{country.name}}</option>
+                               </select>
+                               <div *ngIf="submitted && fval.country.errors" class="invalid-feedback">
+                                <div *ngIf="fval.country.errors.required">Please select your country!
+                                </div>
+
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email ID:</label>
+                                <input type="text" formControlName="email" class="form-control" id="email"
+                                    placeholder="example@sample.com"
+                                    [ngClass]="{ 'is-invalid': submitted && fval.email.errors }">
+                                <div *ngIf="submitted && fval.email.errors" class="invalid-feedback">
+                                    <div *ngIf="fval.email.errors.required">Email is required</div>
+                                    <div *ngIf="fval.email.errors.email">Enter a valid email address</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phonenumber" class="col-form-label">Phone Number:</label>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="text" formControlName="code" class="form-control" id="code"
+                                            placeholder="+91" [ngClass]="{ 'is-invalid': submitted && fval.code.errors}">
+                                            <div *ngIf="submitted && fval.code.errors" class="invalid-feedback">
+                                                <div *ngIf="fval.code.errors.required">Please provide your code!
+                                                </div>
+            
+                                            </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input type="text" formControlName="phone" class="form-control" id="number"
+                                            placeholder="1234567890"
+                                            [ngClass]="{ 'is-invalid': submitted && fval.phone.errors}">
+                                        <div *ngIf="submitted && fval.phone.errors" class="invalid-feedback">
+                                            <div ngClass="fval.phone.errors.required">
+                                                Please provide your phone number.! </div>
+                                            <div *ngIf="fval.phone.errors.minlength">Phonenumber must be at least 10
+                                                characters</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="button">Submit Feedbak</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
